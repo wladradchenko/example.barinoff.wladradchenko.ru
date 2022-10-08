@@ -1,6 +1,6 @@
 """Urls of all pages."""
 from aiohttp import web
-from main.views import Handler
+from postgresql.views import Handler
 
 
 routes = [

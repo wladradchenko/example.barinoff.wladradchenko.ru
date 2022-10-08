@@ -1,0 +1,16 @@
+{
+  "site_name": "Barinoff",
+  "port": 8080,
+  "postgres": {
+    "database_url": "postgres://postgres:postgres@localhost/barinoff",
+    "require_ssl": false
+  },
+  "clickhouse": {
+    "url": "http://localhost:8123/",
+    "user": "default",
+    "password": "",
+    "database": "barinoff",
+    "compress_response": false,
+    "require_ssl": false
+  }
+}

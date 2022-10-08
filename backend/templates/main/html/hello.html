@@ -8,6 +8,8 @@
     <h3>Hello {{name}} {{surname}}!</h3>
     <img src="{{ url('static', filename='main/img/music.png') }}" style="width: 150px; height: 150px; object-fit: cover">
 
+    {% for row in msg %}<p>Date: {{row.date}} -> Message: {{row.msg}}</p>{% endfor %}
+
     <form method="post">
         <textarea name="message"></textarea>
         <input type="submit">

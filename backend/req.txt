@@ -1,2 +1,4 @@
 aiohttp
 aiohttp-jinja2
+aiochclient
+aiofiles
