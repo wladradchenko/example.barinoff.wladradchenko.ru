@@ -2,7 +2,7 @@
   "site_name": "Barinoff",
   "port": 8080,
   "postgres": {
-    "database_url": "postgres://postgres:postgres@localhost/barinoff",
+    "database_url": "postgresql+asyncpg://postgres:postgres@localhost/barinoff",
     "require_ssl": false
   },
   "clickhouse": {

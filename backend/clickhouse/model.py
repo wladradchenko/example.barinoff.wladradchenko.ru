@@ -16,7 +16,7 @@ class TableCreator:
         Method to return Meta classes to create tables
         :return:
         """
-        yield self.Message()
+        yield self.Auction()
 
     def sql_constructor(self):
         """
@@ -25,16 +25,21 @@ class TableCreator:
         """
         return (f"create table if not exists {table.__tablename__} {table.__columns__} engine = {table.__engine__} {table.__partition__} {table.__order__};" for table in self.tables)
 
-    class Message:
+    class Auction:
         """
-        Class of create table Message as Meta
+        Class of create table Auction as Meta
         """
         def __init__(self) -> None:
-            self.__tablename__ = "message"
+            self.__tablename__ = "auction"
             self.__columns__ = "(" \
-                                  "date DateTime," \
-                                  "msg  String" \
+                                  "date         DateTime," \
+                                  "product_id   UInt32," \
+                                  "price        UInt32," \
+                                  "login        String," \
+                                  "message      String," \
+                                  "email        String," \
+                                  "phone        UInt32," \
                                ")"
             self.__engine__ = "ReplacingMergeTree()"
             self.__partition__ = "partition by toStartOfHour(date)"
-            self.__order__ = "order by (date, msg)"
+            self.__order__ = "order by (product_id, login, email, phone)"

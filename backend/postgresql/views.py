@@ -1,13 +1,8 @@
 """Views of main pages."""
-# Classes https://docs.aiohttp.org/en/stable/web_quickstart.html#class-based-views
 from aiohttp import web
 import aiohttp_jinja2
-import ast
-# https://pypi.org/project/aiohttp-csrf/ если добавлять оплату
-# admin panel but without clickhouse
-# https://aiohttp-admin2.readthedocs.io
-# https://aiohttp-admin.readthedocs.io/en/latest/#
-# maybe better idea do admin panel for self
+from sqlalchemy.future import select
+import postgresql.model as model
 
 
 class Handler(web.View):
@@ -19,21 +14,28 @@ class Handler(web.View):
     @staticmethod
     async def get(request: web.Request):
         name = request.match_info.get('name', "Anonymous")
-        # print(request.app["config"])
-        msg = [row for row in await request.app["clickhouse"].client.fetch("SELECT * FROM message")]
-        # print([{f'{key}: {value}' for key, value in row.items()} for row in await request.app["clickhouse"].client.fetch("SELECT * FROM message")])
-        # print(request.rel_url.query['sname'])  # get param from query
-        # print(type(request.rel_url.query))
-        context = {'name': name, 'surname': 'Svetlov', 'msg': msg}
-        response = aiohttp_jinja2.render_template('/main/html/hello.html', request, context)
+        async with request.app["postgresql"].client() as session:
+            products = await session.execute(select(model.Product).order_by(model.Product.product_id))
+            music_list = await session.execute(select(model.MusicList).order_by(model.MusicList.id))
+            await session.commit()
+
+        context = {'name': name, 'surname': 'Svetlov', 'products': products.scalars(), 'music': music_list.scalars()}
+        response = aiohttp_jinja2.render_template('/main/html/main.html', request, context)
         response.headers['Content-Language'] = 'ru'
 
         return response
 
     @staticmethod
     async def post(request: web.Request):
-        import datetime
         message = await request.post()
-        await request.app["clickhouse"].client.execute("INSERT INTO message VALUES", (datetime.datetime.now(), message.get("message")), )
-        print(message.get("message"))
+        # async with request.app["postgresql"].client() as session:
+        #     async with session.begin():
+        #         session.add_all(
+        #             [
+        #                 model.Message(msg=message.get("message")),
+        #                 model.Message(msg="Test!!!"),
+        #             ]
+        #         )
+        #     await session.commit()
+        print("postgre", message.get("message"))
         return web.HTTPFound('/')

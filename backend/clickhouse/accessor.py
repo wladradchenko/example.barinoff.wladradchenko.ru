@@ -31,10 +31,10 @@ class ClickhouseAccessor:
         Method to create tables from model if ones not exist
         :return: True
         """
-        logging.info(msg=f"List of tables before start -> {[row.get('name') for row in await self.client.fetch('show tables')]}")
+        logging.info(msg=f"List of Clickhouse tables before start -> {[row.get('name') for row in await self.client.fetch('show tables')]}")
         tables = TableCreator().sql_constructor()
         [await self.client.execute(sql) for sql in tables]
-        logging.info(msg=f"List of tables after start -> {[row.get('name') for row in await self.client.fetch('show tables')]}")
+        logging.info(msg=f"List of Clickhouse tables after start -> {[row.get('name') for row in await self.client.fetch('show tables')]}")
         return True
 
     async def _on_connect(self, application: web.Application):
@@ -57,4 +57,4 @@ class ClickhouseAccessor:
         """
         if self._session is not None:
             await self._session.close()
-            print("Session is None")
+            print("Session Clickhouse is None")

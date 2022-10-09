@@ -34,4 +34,5 @@ config = asyncio.run(get_config(config_path))
 Loger
 ================
 """
-logging.basicConfig(format='%(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO)
+logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
