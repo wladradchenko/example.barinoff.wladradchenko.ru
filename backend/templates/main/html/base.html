@@ -9,12 +9,80 @@
         {% block css %}
         {% endblock %}
 
+        <!--radio-->
+        <script>
+        var webradio = {
+            player: function () {
+                return document.getElementById("player");
+            },
+            play_station: function (url){
+                document.getElementById("player").src = url;
+            },
+            load_channels: function (){
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function (){
+                    if (request.readyState == 4 && request.status == 200){
+                        var station_data = JSON.parse(request.responseText);
+                        for (var i=0;i<station_data.length;i++) {
+                            var category = station_data[i];
+                            var optgroup = document.createElement("optgroup");
+                            optgroup.label = category.name;
+                            optgroup.setAttribute("class", "category");
+                            document.getElementById("channelList").appendChild(optgroup);
+                            for (var i1=0;i1<category.channels.length;i1++) {
+                                var option = document.createElement("option");
+                                option.textContent = category.channels[i1].name;
+                                (function (url){option.addEventListener("click", function() {
+                                    webradio.play_station(url);
+                                }, false)}(category.channels[i1].url));
+                                option.setAttribute("class", "station");
+                                document.getElementById("channelList").appendChild(option);
+                            }
+                        }
+                    }
+                }
+                request.open("GET", "{{ url('static', filename='main/json/channels.json') }}");
+                request.send();
+            },
+            get_value: function (key) {
+                if (window.localStorage[key] != undefined) {
+                    return window.localStorage[key];
+                }
+            },
+            set_value: function (key, value) {
+                window.localStorage[key] = value;
+            }
+        };
+        </script>
+        <!--radio-->
     </head>
     <body>
+        <!--radio-->
+        <div class="channels">
+            <audio class="player" id="player" autoplay controls preload></audio>
+            <select id="channelList"></select>
+            <button id="changeRadio" onclick="chosenRandomOption('channelList', this.id)">random change</button>
+        </div>
+        <!--radio-->
+
         {% block body %}
         {% endblock %}
 
         {% block script %}
         {% endblock %}
+
+        <!--radio-->
+        <script>
+            webradio.play_station("https://radio.plaza.one/mp3");
+            webradio.load_channels();
+
+            webradio.player().addEventListener("volumechange", function (){
+                webradio.set_value("playervolume", webradio.player().volume);
+            }, false);
+
+            webradio.player().volume = webradio.get_value("playervolume");
+        </script>
+        <script rel="script" src="{{ url('static', filename='main/js/random_option.js') }}"></script>
+        <!--radio-->
     </body>
 </html>

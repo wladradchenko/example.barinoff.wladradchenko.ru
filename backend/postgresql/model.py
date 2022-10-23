@@ -35,7 +35,7 @@ class ImageProduct(Base):
     __tablename__ = "image_product"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     product_id = Column(ForeignKey("product.product_id"))
-    link = Column(String, unique=False)
+    link = Column(String, unique=True, nullable=False)
 
 
 class VideoProduct(Base):
@@ -45,7 +45,7 @@ class VideoProduct(Base):
     __tablename__ = "video_product"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     product_id = Column(ForeignKey("product.product_id"))
-    link = Column(String, unique=False)
+    link = Column(String, unique=True, nullable=False)
 
 
 class MusicList(Base):
@@ -54,6 +54,7 @@ class MusicList(Base):
     """
     __tablename__ = "music_list"
     id = Column(Integer, primary_key=True, index=True)
+    author = Column(String, nullable=False)
     name = Column(String, nullable=False)
-    genre = Column(String, unique=False)
-    link = Column(String, unique=False)
+    genre = Column(String, unique=False, nullable=False)
+    link = Column(String, unique=True, nullable=False)

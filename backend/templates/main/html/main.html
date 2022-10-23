@@ -10,6 +10,8 @@
 
     {% for row in msg %}<p>Date: {{row.date}} -> Message: {{row.msg}}</p>{% endfor %}
 
+    {% for row in music %}<p>{{row.link}}</p>{% endfor %}
+
     <form method="post">
         <textarea name="message"></textarea>
         <input type="submit">

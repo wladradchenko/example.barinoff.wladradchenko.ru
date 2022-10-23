@@ -1,4 +1,8 @@
 .idea/
 **/__pycache__/
 backend/migrations/versions/*
+backend/media/*
+
 backend/settings/config.yaml
+backend/postgresql/views.py
+backend/clickhouse/views.py

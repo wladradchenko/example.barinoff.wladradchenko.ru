@@ -1,0 +1,13 @@
+[
+    {"name": "Pop Music", "channels": [
+        {"name": "Nightwave Plaza", "url": "https://radio.plaza.one/mp3"},
+        {"name": "Classic Rock Florida HD", "url": "https://vip2.fastcast4u.com/proxy/classicrockdoug?mp=/1"}
+    ]},
+    {"name": "Other", "channels": [
+        {"name": "TheRadio.CC", "url": "http://stream.theradio.cc:8000/trcc-stream.opus"}
+    ]},
+    {"name": "Electronic", "channels": [
+        {"name": "SomaFM - Groove Salad", "url": "http://ice1.somafm.com/groovesalad-128-mp3"},
+        {"name": "SomaFM - Space Station", "url": "http://ice1.somafm.com/spacestation-128-mp3"}
+    ]}
+]
