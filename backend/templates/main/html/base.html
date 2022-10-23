@@ -59,7 +59,8 @@
     <body>
         <!--radio-->
         <div class="channels">
-            <audio style="display:none" class="player" id="player" autoplay controls preload></audio>
+<!--            style="display:none"-->
+            <audio class="player" id="player" autoplay controls preload></audio>
             <button onclick="document.getElementById('player').play()">Play</button>
             <button onclick="document.getElementById('player').pause()">Pause</button>
             <button onclick="document.getElementById('player').volume += 0.1">Vol +</button>
@@ -77,12 +78,18 @@
 
         <!--radio-->
         <script async>
+            let changeRadioButton = document.getElementById("changeRadio");
+
             webradio.play_station("https://radio.plaza.one/mp3");
             webradio.load_channels();
 
             webradio.player().addEventListener("volumechange", function (){
                 webradio.set_value("playervolume", webradio.player().volume);
             }, false);
+
+            webradio.player().addEventListener("ended",function(){
+              changeRadioButton.click();
+            });
 
             webradio.player().volume = webradio.get_value("playervolume");
         </script>

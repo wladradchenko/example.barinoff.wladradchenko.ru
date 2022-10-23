@@ -9,5 +9,22 @@
     {"name": "Electronic", "channels": [
         {"name": "SomaFM - Groove Salad", "url": "http://ice1.somafm.com/groovesalad-128-mp3"},
         {"name": "SomaFM - Space Station", "url": "http://ice1.somafm.com/spacestation-128-mp3"}
+    ]},
+    {"name": "Elvira Asfandiyarova", "channels": [
+        {"name": "Arctic Ocean", "url": "/media/mp3/Elvira_Asfandiyarova_Arctic_Ocean.mp3"},
+        {"name": "Azure", "url": "/media/mp3/Elvira_Asfandiyarova_Azure.mp3"},
+        {"name": "Day-Spring", "url": "/media/mp3/Elvira_Asfandiyarova_Day_Spring.mp3"},
+        {"name": "Détourné", "url": "/media/mp3/Elvira_Asfandiyarova_Détourné.mp3"},
+        {"name": "Écarter", "url": "/media/mp3/Elvira_Asfandiyarova_Écarter.mp3"},
+        {"name": "Elude", "url": "/media/mp3/Elvira_Asfandiyarova_Elude.mp3"},
+        {"name": "En_avant", "url": "/media/mp3/Elvira_Asfandiyarova_En_avant.mp3"},
+        {"name": "En lair", "url": "/media/mp3/Elvira_Asfandiyarova_En_lair.mp3"},
+        {"name": "Northern Lights", "url": "/media/mp3/Elvira_Asfandiyarova_Northern_Lights.mp3"},
+        {"name": "Pas de deux", "url": "/media/mp3/Elvira_Asfandiyarova_Pas_de_deux.mp3"},
+        {"name": "Polaris", "url": "/media/mp3/Elvira_Asfandiyarova_Polaris.mp3"},
+        {"name": "Recourbé", "url": "/media/mp3/Elvira_Asfandiyarova_Recourbé.mp3"},
+        {"name": "Relevé", "url": "/media/mp3/Elvira_Asfandiyarova_Relevé.mp3"},
+        {"name": "Renverser", "url": "/media/mp3/Elvira_Asfandiyarova_Renverser.mp3"},
+        {"name": "Snow Avalanche", "url": "/media/mp3/Elvira_Asfandiyarova_Snow_Avalanche.mp3"}
     ]}
 ]
