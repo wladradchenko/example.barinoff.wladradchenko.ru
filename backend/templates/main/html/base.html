@@ -3,9 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
-
         <link rel="stylesheet" href="{{ url('static', filename='main/css/base.css') }}">
-
         {% block css %}
         {% endblock %}
 
@@ -68,10 +66,8 @@
         };
         </script>
         <!--radio-->
-    </head>
-    <body>
         <!--radio-->
-        <div class="channels">
+        <div class="channels" style="position: absolute;z-index: 3;">
             <audio style="display:none" class="player" id="player" autoplay controls preload></audio>
             <button onclick="document.getElementById('player').play()">Play</button>
             <button onclick="document.getElementById('player').pause()">Pause</button>
@@ -81,7 +77,8 @@
             <button id="changeRadio" onclick="chosenRandomOption('channelList', this.id)">random change</button>
         </div>
         <!--radio-->
-
+    </head>
+    <body>
         {% block body %}
         {% endblock %}
 

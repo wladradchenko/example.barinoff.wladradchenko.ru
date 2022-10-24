@@ -1,19 +1,71 @@
 {% extends 'main/html/base.html' %}
 
 {% block title %}
-    Main page
+    Hello {{name}} {{surname}}!
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url('static', filename='main/css/popup.css') }}">
 {% endblock %}
 
 {% block body %}
-    <h3>Hello {{name}} {{surname}}!</h3>
-    <img src="{{ url('static', filename='main/img/music.png') }}" style="width: 150px; height: 150px; object-fit: cover">
+    <!-- pop-up -->
+    <div id="product-info-background" onclick="closeForm()" style="width: 100%;height: 100%;background-color:black;z-index:3;position: fixed; background-color: rgba(0,0,0,.65);top:0px;left:0px;display:none;"></div>
+    <div class="form-popup" id="product-info" style="position: absolute;z-index:4;top: 50%; left: 75%; margin-right: -50%; transform: translate(-50%, -50%);background:#f4f4f4;width:20vw;height:55vh;">
+      <form action="/action_page.php" class="form-container">
+        <div class="img" id="img-popup" style="background-image:None;position: relative;width: 19vw;height: 19vw;background-repeat: no-repeat;object-fit: cover;background-size: contain;margin: 0.5vw;box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;"></div>
+<!--        <h1>Login</h1>-->
 
-    {% for row in msg %}<p>Date: {{row.date}} -> Message: {{row.msg}}</p>{% endfor %}
+<!--        <label for="email"><b>Email</b></label>-->
+<!--        <input type="text" placeholder="Enter Email" name="email" required>-->
 
-    {% for row in music %}<p>{{row.link}}</p>{% endfor %}
+<!--        <label for="psw"><b>Password</b></label>-->
+<!--        <input type="password" placeholder="Enter Password" name="psw" required>-->
 
-    <form method="post">
-        <textarea name="message"></textarea>
-        <input type="submit">
-    </form>
+<!--        <button type="submit" class="btn">Login</button>-->
+<!--        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>-->
+      </form>
+    </div>
+    <div class="form-popup" id="product-info-msg" style="position: absolute;z-index:4;top: 50%; left: 35%; margin-right: -50%; transform: translate(-50%, -50%);background:#f4f4f4;width:40vw;height:55vh;">
+      <form action="/action_page.php" class="form-container">
+        <a>в чем суть. будет кнопка выбрать рандомное настроение, после этого начинают парситься картинки по этому настроению и включается музыка под этот жанр (наиболее похожее слово). под картинкой будут теги, а в большом окне дискорд с нейронкой в которой можно генерировать изображение по этим тегам.
+        tittle -> https://codepen.io/joyful-bass/pen/eYMMwGM</a>
+      </form>
+    </div>
+    <!-- pop-up -->
+    <div class="wrapper-images">
+	    <!-- 5 images by row with 15 as 5 * 3 -->
+        {% for z in range(4) %}
+            <div class="images-line">
+            {% for j in range(5) %}
+                {% for i in range(5) %}
+                    {% for prod in products | random %}
+                        <div class="line" style="background-image:url(/media/{{ prod.image_url }})">
+                            <div class="img" style="background-image:url(/media/{{ prod.image_url }})" onclick="openForm(this.style);"></div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script async>
+    function openForm(src) {
+      console.log(src.backgroundImage);
+      document.getElementById("img-popup").style.backgroundImage = src.backgroundImage;
+      document.getElementById("product-info").style.display = "block";
+      document.getElementById("product-info-msg").style.display = "block";
+      document.getElementById("product-info-background").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("product-info").style.display = "none";
+      document.getElementById("product-info-msg").style.display = "none";
+      document.getElementById("product-info-background").style.display = "none";
+    }
+</script>
 {% endblock %}
