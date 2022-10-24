@@ -46,15 +46,3 @@ class VideoProduct(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     product_id = Column(ForeignKey("product.product_id"))
     link = Column(String, unique=True, nullable=False)
-
-
-class MusicList(Base):
-    """
-    Class of create table Music list
-    """
-    __tablename__ = "music_list"
-    id = Column(Integer, primary_key=True, index=True)
-    author = Column(String, nullable=False)
-    name = Column(String, nullable=False)
-    genre = Column(String, unique=False, nullable=False)
-    link = Column(String, unique=True, nullable=False)

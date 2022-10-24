@@ -22,9 +22,22 @@
                 var request = new XMLHttpRequest();
                 request.onreadystatechange = function (){
                     if (request.readyState == 4 && request.status == 200){
+                        let genre = new URL(location.href).pathname.split('/')[1];
+                        let genreArray = [];
                         var station_data = JSON.parse(request.responseText);
+
                         for (var i=0;i<station_data.length;i++) {
-                            var category = station_data[i];
+                            if (station_data[i].name == decodeURI(genre)) {
+                                genreArray.push(i);
+                            }
+                        }
+
+                        if (genreArray.length == 0){
+                            genreArray = Array.from(Array(station_data.length).keys());
+                        }
+
+                        genreArray.forEach(function (item, index) {
+                            var category = station_data[item];
                             var optgroup = document.createElement("optgroup");
                             optgroup.label = category.name;
                             optgroup.setAttribute("class", "category");
@@ -38,7 +51,7 @@
                                 option.setAttribute("class", "station");
                                 document.getElementById("channelList").appendChild(option);
                             }
-                        }
+                        });
                     }
                 }
                 request.open("GET", "{{ url('static', filename='main/json/channels.json') }}");
@@ -59,8 +72,7 @@
     <body>
         <!--radio-->
         <div class="channels">
-<!--            style="display:none"-->
-            <audio class="player" id="player" autoplay controls preload></audio>
+            <audio style="display:none" class="player" id="player" autoplay controls preload></audio>
             <button onclick="document.getElementById('player').play()">Play</button>
             <button onclick="document.getElementById('player').pause()">Pause</button>
             <button onclick="document.getElementById('player').volume += 0.1">Vol +</button>
@@ -78,7 +90,7 @@
 
         <!--radio-->
         <script async>
-            let changeRadioButton = document.getElementById("changeRadio");
+            let changeRadioButton = document.getElementById("changeRadio");  //can delete if just stream
 
             webradio.play_station("https://radio.plaza.one/mp3");
             webradio.load_channels();
@@ -87,9 +99,9 @@
                 webradio.set_value("playervolume", webradio.player().volume);
             }, false);
 
-            webradio.player().addEventListener("ended",function(){
-              changeRadioButton.click();
-            });
+            webradio.player().addEventListener("ended",function(){  //can delete if just stream
+              changeRadioButton.click();  //can delete if just stream
+            });  //can delete if just stream
 
             webradio.player().volume = webradio.get_value("playervolume");
         </script>
