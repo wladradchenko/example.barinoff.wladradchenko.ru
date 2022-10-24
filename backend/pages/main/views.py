@@ -24,7 +24,6 @@ class Handler(web.View):
         """Get data from PostgreSQL tables by ORM"""
         async with request.app["postgresql"].client() as session:
             products = await session.execute(select(model.Product).order_by(model.Product.product_id))
-            music_list = await session.execute(select(model.MusicList).order_by(model.MusicList.id))
             await session.commit()
         """Get data from PostgreSQL tables by ORM"""
 
@@ -32,7 +31,7 @@ class Handler(web.View):
         msg = [row for row in await request.app["clickhouse"].client.fetch("SELECT * FROM auction")]
         """Get data from Clickhouse tables by SQL"""
 
-        context = {'name': name, 'surname': 'Svetlov', 'products': products.scalars(), 'music': music_list.scalars(), 'msg': msg}
+        context = {'name': name, 'surname': 'Svetlov', 'products': products.scalars(), 'msg': msg}
         response = aiohttp_jinja2.render_template('/main/html/main.html', request, context)
         response.headers['Content-Language'] = 'ru'
 
