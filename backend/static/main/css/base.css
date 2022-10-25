@@ -1,6 +1,8 @@
+/*
 :root {
-    --duration: 80s;
+    --duration: 10s;
 }
+*/
 
 body {
   background: #f7f7f7;
@@ -20,15 +22,22 @@ body {
 }
 
 .images-line {
-  -webkit-animation: runner var(--duration) linear infinite;
-          animation: runner var(--duration) linear infinite;
+  /*
+  -webkit-animation: runner var(--duration) linear;
+          animation: runner var(--duration) linear;
+  */
   display: flex;
-  transform: translateX(23%);
+  transform: translateX(45%);
+  /*
+  animation-fill-mode: both;
+  */
 }
+/*
 .images-line:hover {
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
 }
+*/
 .images-line .line {
   background-position: 50% 50%;
   background-size: cover;
