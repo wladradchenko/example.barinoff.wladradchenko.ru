@@ -7,43 +7,53 @@
 {% block css %}
 <link rel="stylesheet" href="{{ url('static', filename='main/css/popup.css') }}">
 <link rel="stylesheet" href="{{ url('static', filename='main/css/title.css') }}">
+
+<style>
+    img {
+        aspect-ratio: 9 / 16;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+    iframe {
+        aspect-ratio: 9 / 16;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+<style>
+    input:focus {
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+</style>
 {% endblock %}
 
 {% block body %}
     <!-- pop-up -->
-    <div id="product-info-background" onclick="closeForm()" style="width: 100%;height: 100%;background-color:black;z-index:3;position: fixed; background-color: rgba(0,0,0,.65);top:0px;left:0px;display:none;"></div>
-    <div class="form-popup" id="product-info" style="position: absolute;z-index:4;top: 50%; left: 75%; margin-right: -50%; transform: translate(-50%, -50%);background:#f4f4f4;width:20vw;height:55vh;">
+    <div id="product-info-background" style="width: 100%;height: 100%;background-color:black;z-index:3;position: fixed; background-color: rgba(0,0,0,.65);top:0px;left:0px;display:none;"></div>
+    <div class="form-popup" id="product-info">
       <form action="/action_page.php" class="form-container">
-        <div class="img" id="img-popup" style="background-image:None;position: relative;width: 19vw;height: 19vw;background-repeat: no-repeat;object-fit: cover;background-size: contain;margin: 0.5vw;box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;"></div>
-<!--        <h1>Login</h1>-->
-
-<!--        <label for="email"><b>Email</b></label>-->
-<!--        <input type="text" placeholder="Enter Email" name="email" required>-->
-
-<!--        <label for="psw"><b>Password</b></label>-->
-<!--        <input type="password" placeholder="Enter Password" name="psw" required>-->
-
-<!--        <button type="submit" class="btn">Login</button>-->
-<!--        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>-->
+          <div style="display:flex; grid-template-columns: 20px 50px;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);">
+              <div class="container-popup__close" onclick="closeForm()">&times;</div>
+              <div id="youtube-video" style="z-index:4;background:rgba(255, 255, 255, 0);width:20vw;"></div>
+<!--              <div style="width:30vw;background-color:white;"></div>-->
+<!--              https://codepen.io/myacode/pen/PoqQQNM-->
+          </div>
       </form>
     </div>
-    <div class="form-popup" id="product-info-msg" style="position: absolute;z-index:4;top: 50%; left: 35%; margin-right: -50%; transform: translate(-50%, -50%);background:#f4f4f4;width:40vw;height:55vh;">
-      <form action="/action_page.php" class="form-container">
-        <a>в чем суть. будет кнопка выбрать рандомное настроение, после этого начинают парситься картинки по этому настроению и включается музыка под этот жанр (наиболее похожее слово). под картинкой будут теги, а в большом окне дискорд с нейронкой в которой можно генерировать изображение по этим тегам.
-        tittle -> https://codepen.io/joyful-bass/pen/eYMMwGM</a>
-      </form>
-    </div>
-    <!-- pop-up -->
     <div class="wrapper-images" style="overflow: hidden;">
         <!--title-->
         <div class="animated-title">
           <div class="text-top">
             <div>
-              <span>Chill-out</span><span>and relax</span>
+              <span style="font-size: 15vmin;">Chill-out</span><span>relax zone!</span>
             </div>
           </div>
           <div class="text-bottom">
-            <div>Zone!</div>
+            <div><form action="/{{phrase}}" method="post"><input type="text" value="{{phrase}}" name="name" style="font-size: 7vmin;width:58vmin;box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;background: #f7f7f7;border-radius: .3rem;"></form></div>
           </div>
         </div>
         <!--title-->
@@ -52,41 +62,80 @@
             <div class="images-line">
             {% for j in range(2) %}
                 {% for i in range(5) %}
-                    {% for prod in products | random %}
-                        <div class="line" style="background-image:url(/media/{{ prod.image_url }})">
-                            <div class="img" style="background-image:url(/media/{{ prod.image_url }})" onclick="openForm(this.style);"></div>
+                    {% for video_id in videos_id | random %}
+                        {% if video_id.video_id %}
+                        <div class="line" style="border-radius: 50%;background-image:url(https://i.ytimg.com/vi/{{ video_id.video_id }}/maxresdefault.jpg)">
+                                <div class="img" id="{{ video_id.video_id }}" style="border-radius: 50%;background-image:url(https://i.ytimg.com/vi/{{ video_id.video_id }}/maxresdefault.jpg);" onclick="openForm(this.id);"></div>
                         </div>
+                        {% else %}
+                        <div class="line" style="border-radius: 50%;background-image:url(https://i.ytimg.com/vi/{{ video_id }}/maxresdefault.jpg)">
+                                <div class="img" id="{{ video_id }}" style="border-radius: 50%;background-image:url(https://i.ytimg.com/vi/{{ video_id }}/maxresdefault.jpg);" onclick="openForm(this.id);"></div>
+                        </div>
+                        {% endif %}
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
             </div>
         {% endfor %}
     </div>
-    <script>
-        const scrollContainer = document.querySelector(".wrapper-images");
-
-        scrollContainer.addEventListener("wheel", (evt) => {
-            evt.preventDefault();
-            scrollContainer.scrollLeft += evt.deltaY;
-        });
-    </script>
-
 {% endblock %}
 
 {% block script %}
 <script async>
-    function openForm(src) {
-      console.log(src.backgroundImage);
-      document.getElementById("img-popup").style.backgroundImage = src.backgroundImage;
+    // Control movement images by scroll
+    const scrollContainer = document.querySelector(".wrapper-images");
+
+    scrollContainer.addEventListener("wheel", (evt) => {
+        evt.preventDefault();
+        scrollContainer.scrollLeft += evt.deltaY;
+    });
+</script>
+
+<script async>
+    // Open popup
+    function openForm(id) {
+      // Get of the video
+      let youtube_video = document.querySelector('#youtube-video');
+      var youtube_delete_element = document.createElement("div");
+      youtube_video.appendChild(youtube_delete_element);
+      // Add a thumbnail
+      youtube_delete_element.innerHTML =`<img alt="" src="https://img.youtube.com/vi/${id}/maxresdefault.jpg">`
+      // Add the ID to the data-youtube attribute
+      youtube_delete_element.setAttribute('data-youtube', id);
+      // Add a role of button
+      youtube_delete_element.setAttribute('role', 'button');
+
       document.getElementById("product-info").style.display = "block";
-      document.getElementById("product-info-msg").style.display = "block";
       document.getElementById("product-info-background").style.display = "block";
     }
 
+    // Close popup
     function closeForm() {
+      let youtube_video = document.querySelector('#youtube-video');
+      // Delete all under div youtube_video then close
+      youtube_video.innerHTML =``
+
       document.getElementById("product-info").style.display = "none";
-      document.getElementById("product-info-msg").style.display = "none";
       document.getElementById("product-info-background").style.display = "none";
     }
+
+    // Click on img to run youtube video
+    function clickHandler (event) {
+      // Get the video link
+      let link = event.target.closest('[data-youtube]');
+      if (!link) return;
+      // Prevent the URL from redirecting users
+      event.preventDefault();
+      // Get the video ID
+      let id = link.getAttribute('data-youtube');
+      // Create the player
+      let player = document.createElement('div');
+      player.innerHTML = `<iframe width="720" height="1280" src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;"></iframe>`;
+      // Inject the player into the UI
+      link.replaceWith(player);
+    }
+
+    // Detect clicks on the video thumbnails
+    document.addEventListener('click', clickHandler);
 </script>
 {% endblock %}

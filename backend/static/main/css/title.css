@@ -12,9 +12,9 @@
   color: #222;
   font-family: Roboto, Arial, sans-serif;
   height: 90vmin;
-  left: 35%;
+  left: 36%;
   position: absolute;
-  top: 55%;
+  top: 59%;
   transform: translate(-50%, -50%);
   width: 90vmin;
 }
@@ -25,7 +25,7 @@
   width: 60vmin;
 }
 .animated-title > div div {
-  font-size: 13vmin;
+  font-size: 12vmin;
   padding: 2vmin 0;
   position: absolute;
 }
@@ -44,7 +44,8 @@
   transform: translate(0, 100%);
 }
 .animated-title > div.text-top div span:first-child {
-  color: #767676;
+  /*color: #767676;*/
+  color: var(--primary);
 }
 .animated-title > div.text-bottom {
   bottom: 0;

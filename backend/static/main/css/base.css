@@ -12,11 +12,10 @@ body {
 .wrapper-images {
   display: flex;
   flex-direction: column;
-  height: 150vh;
   justify-content: center;
-  left: 50%;
+  left: 54%;
   position: absolute;
-  top: 55%;
+  top: 51%;
   opacity: 0.8;
   transform: translate3d(-50%, -50%, 0) perspective(800px) rotatey(-10deg) rotate(10deg);
 }
@@ -43,7 +42,7 @@ body {
   background-size: cover;
   flex: none;
   height: 28vh;
-  margin: clamp(15px, 3vw, 30px);
+  margin: clamp(6vh, 3vw, 30px);
   width: 28vh;
   position: relative;
   transition: ease-in-out all 0.3s;

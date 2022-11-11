@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{{ url('static', filename='main/css/base.css') }}">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+        <link rel="stylesheet/less" type="text/css" href="{{ url('static', filename='main/css/player.less') }}" />   <!--SCCS-->
+        <script src="https://cdn.jsdelivr.net/npm/less@4.1.1" ></script>   <!--SCCS-->
         {% block css %}
         {% endblock %}
 
@@ -67,15 +70,46 @@
         </script>
         <!--radio-->
         <!--radio-->
-        <div class="channels" style="position: absolute;z-index: 100;">
+        <div class="channels" style="display: grid;z-index: 3;box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #9b9b9b6b; background: #f7f7f7; border-bottom-right-radius: 0.6em; border: 0; height: 3rem; width: 35rem;position:absolute;top:0%;left:0%;">
             <audio style="display:none" class="player" id="player" autoplay controls preload></audio>
-            <button onclick="document.getElementById('player').play()">Play</button>
-            <button onclick="document.getElementById('player').pause()">Pause</button>
-            <button onclick="document.getElementById('player').volume += 0.1">Vol +</button>
-            <button onclick="document.getElementById('player').volume -= 0.1">Vol -</button>
-            <select id="channelList"></select>
-            <button id="changeRadio" onclick="chosenRandomOption('channelList', this.id)">random change</button>
+            <div style="display:flex;justify-content:space-around;;align-items: center;flex-direction: row;flex-wrap: wrap;">
+              <div class="slider-control">
+                   <input type='range' id="volume-slider"  min='0' value='20' max='100' step='10' />
+              </div>
+              <div class="icon">
+                  <div class="icon__fa-backward">
+                    <i class="fa fa-backward"></i>
+                  </div>
+              </div>
+              <div class="segmented-control">
+                  <input onclick="document.getElementById('player').pause()" autocomplete="off" type="radio" name="radio2" value="3" id="tab-1" checked/>
+                  <label for="tab-1" class= "segmented-control__1" style="padding: 0 .4rem;"><i class="fa fa-pause"></i></label>
+                  <input onclick="document.getElementById('player').play()" autocomplete="off" type="radio" name="radio2" value="4" id="tab-2" />
+                  <label for="tab-2" class= "segmented-control__2" style="padding: 0 .4rem;"><i class="fa fa-play"></i></label>
+                  <div class="segmented-control__color"></div>
+              </div>
+              <div class="icon">
+                  <div class="icon__fa-forward">
+                    <i class="fa fa-forward"></i>
+                  </div>
+              </div>
+              <div class="chip">
+                  <select class="chip__icon" style="cursor: pointer;border: none;color: var(--greyDark); border-radius: .3rem; box-shadow: inset .1rem .1rem .2rem var(--greyLight-2), inset -.2rem -.2rem .2rem var(--white);padding: 0 .2rem;background-color: #f7f7f7;" id="channelList"></select>
+              </div>
+              <div class="icon">
+                  <div class="icon__fa-random" id="changeRadio" onclick="chosenRandomOption('channelList', this.id)">
+                    <i class="fa fa-random"></i>
+                  </div>
+              </div>
+            </div>
         </div>
+        <script>
+            let volume = document.getElementById('volume-slider');
+            let audio = document.getElementById('player');
+            volume.addEventListener("change", function(e) {
+                audio.volume = e.currentTarget.value / 100;
+            })
+        </script>
         <!--radio-->
     </head>
     <body>
@@ -102,7 +136,7 @@
 
             webradio.player().volume = webradio.get_value("playervolume");
         </script>
-        <script rel="script" src="{{ url('static', filename='main/js/random_option.js') }}"></script>
+        <script async rel="script" src="{{ url('static', filename='main/js/random_option.js') }}"></script>
         <!--radio-->
     </body>
 </html>

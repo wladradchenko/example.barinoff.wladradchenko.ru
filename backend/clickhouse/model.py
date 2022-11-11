@@ -16,30 +16,26 @@ class TableCreator:
         Method to return Meta classes to create tables
         :return:
         """
-        yield self.Auction()
+        yield self.ShortsVideo()
 
     def sql_constructor(self):
         """
         SQL Constructor
         :return: generator from sql
         """
-        return (f"create table if not exists {table.__tablename__} {table.__columns__} engine = {table.__engine__} {table.__partition__} {table.__order__};" for table in self.tables)
+        return (f"create table if not exists {table.__tablename__} {table.__columns__} engine = {table.__engine__} {table.__partition__} {table.__order__} {table.__ttl__};" for table in self.tables)
 
-    class Auction:
+    class ShortsVideo:
         """
         Class of create table Auction as Meta
         """
         def __init__(self) -> None:
-            self.__tablename__ = "auction"
+            self.__tablename__ = "shorts_video"
             self.__columns__ = "(" \
-                                  "date         DateTime," \
-                                  "product_id   UInt32," \
-                                  "price        UInt32," \
-                                  "login        String," \
-                                  "message      String," \
-                                  "email        String," \
-                                  "phone        UInt32," \
+                                  "date         Date," \
+                                  "video_id     String" \
                                ")"
             self.__engine__ = "ReplacingMergeTree()"
-            self.__partition__ = "partition by toStartOfHour(date)"
-            self.__order__ = "order by (product_id, login, email, phone)"
+            self.__partition__ = ""
+            self.__order__ = "ORDER BY video_id"
+            self.__ttl__ = "TTL date + INTERVAL 2 WEEK DELETE WHERE toDayOfWeek(date) = 1"
