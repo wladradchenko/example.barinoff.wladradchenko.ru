@@ -13,6 +13,6 @@
     "compress_response": false,
     "require_ssl": false
   },
-  "serp_api": "7fe76dc4de1a4dbce4941817fda6898044c7dd34fe089bf5a68f34d31b9467fd_1",
-  "thesaurus_api": "L3oXMn7/dSDL+2+F82wD3g==OWG2OYn09BASGTsZ_1"
+  "serp_api": "<YOUR_API>",
+  "thesaurus_api": "<YOUR_API>"
 }
